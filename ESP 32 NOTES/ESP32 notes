@@ -1,0 +1,145 @@
+1. USE the commands given the screen shots to export the path.
+
+2. to enable permission of usb port :
+
+sudo usermod -a -G dialout $USER
+
+3. Export path ( not needed if written in .profile)
+
+export PATH=$PATH:home/amit/BIBA/esp/xtensa-esp32-elf/bin
+
+must be used for the current arrangement of folder. 
+
+
+-----------------------------------------------------------------------------------
+
+//Must be done for the individual terminal from where we want to run the code.
+
+export IDF_PATH=/home/biba/BIBA/esp/ComponentRepo/esp-idf
+
+
+// should be written below the code of .profile file (open using -> geany ~/.profile)
+
+export PATH="$HOME/BIBA/esp/xtensa-esp32-elf/bin:$PATH"
+
+
+In the eclipse ---> path and symbols put : ${IDF_PATH}/components/esp32
+
+---------------------------------------------------------------------------------------
+HOW TO RUN THE CODE AND CHECK OUTPUT
+
+1. go to the project path ex: biba@biba:~/DriveA/FreeRTOSTraining/freeRTOSProject$
+
+
+2. export IDF_PATH=/home/biba/BIBA/esp/ComponentRepo/esp-idf
+
+3. Dump the code in esp32. j8 creates 8 threads running parallel. so increses the speed of flash.
+
+make -j8 flash
+
+
+4. To see the output in terminal type the below the command.
+
+make monitor
+
+4. to create logs
+
+make monitor > log.txt
+
+geany log.txt 
+
+-----------------------------------------------------------------------------------------
+GIT 
+
+ISSUE: Git seems to be able to "know" about the files even after you add them to .gitignore. The files are stills shown in the "Untracked files" category. 
+
+solution:
+
+git rm --cached .settings/language.settings.xml
+
+
+It removes the files from the git but not from the actual directory.
+
+---------------------------------------------------------------------
+GIT CONFLICT ISSUE
+---------------------------------------------------------------------
+
+=> In case of conflict: Use rebase
+
+1. git pull --rebase origin master
+
+=> if there is merge error for a particular file or line of code:
+
+2. git mergetool
+
+A editor will open where the developers can agree upon to keep the required changes.
+
+save the file.
+
+=> Now perform rebasing
+
+3. git rebase --continue
+
+Now perform git push
+
+CONFLICT IS SOLVED
+--------------------------------------------------------------------------------------------
+/home/amit/BIBA/esp/xtensa-esp32-elf/bin  
+
+
+
+
+Below path has been taken from eclipse:
+
+PATH = /bin:/home/amit/BIBA/esp/xtensa-esp32-elf/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/usr/games:/usr/local/games:/snap/bin
+
+
+
+~/BIBA/esp/openocd-esp32/share/openocd/scripts$ 
+
+openocd -f ./interface/jlink.cfg  -f ./board/esp-wroom-32.cfg 
+
+
+
+If permission denied error in Jupyter notebook:
+
+error: OSError: [Errno 13] Permission denied: '/home/biba/.local/share/jupyter/runtime'
+
+sol:  chmod 777 -R /home/biba/.local/share/jupyter
+
+
+
+To set print option in esp:
+
+go to menu config: make menuconfig
+
+
+
+
+To start debugging (working command):
+
+biba@biba:~/BIBA/esp/dumpOpenOCD/openocd-esp32/bin$ sudo ./openocd -f ../share/openocd/scripts/interface/jlink.cfg -f ../share/openocd/scripts/board/esp-wroom-32.cfg 
+
+
+
+========================================
+ISSUES
+
+if undefined reference comes for ESP_LOGV
+
+go to c/c++ general -> indexer -> check the allow heuristic resolution. then rebuild indexer.
+
+
+==========================================
+
+for PI setup with eclipse:
+
+/home/biba/DriveA/ControlProject/RemoteControlledCamera/raspberrypi/tools
+
+=======================================================
+Note: For ESP32
+
+Remember to check serial.begin or wire function:
+
+Serial.begin(38400); remove since it has been declared once in the main function.
+
